@@ -8,7 +8,6 @@ import {
   signInWithPopup
 } from "firebase/auth";
 import { auth, gProvider } from "../../firebase";
-import { errorToast, successToast } from "../../components/errorHandlers";
 import Loader from "../../components/Loader";
 import Bulbasaur from "../../assets/images/bulbasaur.png";
 import Logo from "../../assets/images/logo.svg";
@@ -36,7 +35,6 @@ const Signup = (props: Props) => {
       .then((userCredential) => {
         setIsLoading(false);
         const user = userCredential.user;
-        successToast("Successfully Signed in.");
         navigate("/home");
       })
       .catch((error) => {
@@ -44,7 +42,6 @@ const Signup = (props: Props) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorMessage);
-        errorToast(errorMessage);
       });
   };
 
@@ -56,14 +53,12 @@ const Signup = (props: Props) => {
         const credential: any = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         const user = result.user;
-        successToast("Successfully Signed in.");
         navigate("/home");
       })
       .catch((error) => {
         setIsLoading(false);
         const errorCode = error.code;
         const errorMessage = error.message;
-        errorToast(errorMessage);
         const email = error.customData.email;
         const credential = GoogleAuthProvider.credentialFromError(error);
       });

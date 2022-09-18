@@ -7,7 +7,6 @@ import {
 import React, { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { errorToast, successToast } from "../../components/errorHandlers";
 import Loader from "../../components/Loader";
 import { auth, gProvider } from "../../firebase";
 import Logo from "../../assets/images/logo.svg";
@@ -34,14 +33,12 @@ const Login = (props: Props) => {
       .then((userCredential) => {
         setIsLoading(false);
         const user = userCredential.user;
-        successToast("Successfully Signed in.");
         navigate("/home");
       })
       .catch((error) => {
         setIsLoading(false);
         const errorCode = error.code;
         const errorMessage = error.message;
-        errorToast(errorMessage);
       });
   };
 
@@ -53,14 +50,12 @@ const Login = (props: Props) => {
         const credential: any = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         const user = result.user;
-        successToast("Successfully Signed in.");
         navigate("/home");
       })
       .catch((error) => {
         setIsLoading(false);
         const errorCode = error.code;
         const errorMessage = error.message;
-        errorToast(errorMessage);
         const email = error.customData.email;
         const credential = GoogleAuthProvider.credentialFromError(error);
       });
