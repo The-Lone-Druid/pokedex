@@ -1,0 +1,86 @@
+@import url(https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
+@import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+
+$custom-colors: (
+  rock: #b69e31,
+  ghost: #70559b,
+  steel: #b7b9d0,
+  water: #6493eb,
+  grass: #74cb48,
+  psychic: #fb5584,
+  ice: #9ad6df,
+  dark: #75574c,
+  fairy: #e69eac,
+  normal: #aaa67f,
+  fighting: #c12239,
+  flying: #a891ec,
+  poison: #a43e9e,
+  ground: #dec16b,
+  bug: #a7b723,
+  fire: #f57d31,
+  electric: #f9cf30,
+  dragon: #7037ff,
+  "dark-gray": #212121,
+  "medium-gray": #666666,
+  "light-gray": #e0e0e0,
+  white: #ffffff,
+  background: #f7f7f7
+);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+// Components
+.pokeball-card {
+  transition: all 0.3s ease-out;
+
+  &:hover {
+    transform: scale(1.05);
+
+    .pokemon-name {
+      color: black !important;
+    }
+  }
+}
+
+.pokemon-details {
+  padding: 56px 20px 20px 20px;
+  border-radius: 8px;
+  margin-top: 150px;
+
+  .pokemon-image {
+    top: -140px;
+    left: 0;
+    right: 0;
+
+    .pokemon {
+      z-index: 1;
+    }
+
+    .visible-image {
+      top: -80px;
+      right: 30%;
+    }
+  }
+}
