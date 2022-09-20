@@ -10,6 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
 import { auth, gProvider } from "../../firebase";
 import Logo from "../../assets/images/logo.svg";
+import { errorToast, successToast } from "../../components/errorHandlers";
 
 type Props = {};
 type Inputs = {
@@ -34,11 +35,13 @@ const Login = (props: Props) => {
         setIsLoading(false);
         const user = userCredential.user;
         navigate("/home");
+        successToast("Logged in successfully.");
       })
       .catch((error) => {
         setIsLoading(false);
         const errorCode = error.code;
         const errorMessage = error.message;
+        errorToast(error.message);
       });
   };
 
@@ -50,6 +53,7 @@ const Login = (props: Props) => {
         const credential: any = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         const user = result.user;
+        successToast("Logged in with Google.");
         navigate("/home");
       })
       .catch((error) => {
@@ -58,6 +62,7 @@ const Login = (props: Props) => {
         const errorMessage = error.message;
         const email = error.customData.email;
         const credential = GoogleAuthProvider.credentialFromError(error);
+        errorToast("Something went wrong.");
       });
   };
 

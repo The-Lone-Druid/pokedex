@@ -6,6 +6,8 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ToastContainer } from "react-toastify";
 import "./index.scss";
+import "../node_modules/bootstrap/dist/js/bootstrap.min.js";
+import "react-toastify/dist/ReactToastify.css";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);

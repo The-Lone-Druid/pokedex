@@ -8,26 +8,44 @@ import {
   selectPokemons,
   setPokemonState
 } from "../../features/pokemon/pokemonSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 type Props = {};
 
 const Home = (props: Props) => {
   const cachedPokemons = useAppSelector(selectPokemons);
   const dispatch = useAppDispatch();
+  const [queryParams, setQueryParams] = useSearchParams();
   const navigate = useNavigate();
   const [fetchPokemons, fetchPokemonsResponse] = useGetPokemonsMutation();
   const [pokemons, setPokemons] = useState([]);
   const [isLoading, setisLoading] = useState(false);
   const [limit, setLimit] = useState(8);
   const [offset, setOffset] = useState(0);
+  const limitParam = queryParams.get("limit" || "");
+  const offsetParam = queryParams.get("offset" || "");
 
   useEffect(() => {
     setisLoading(true);
-    fetchPokemons({
-      limit: limit,
-      offset: offset
-    });
+    if (
+      limitParam &&
+      offsetParam &&
+      (parseInt(limitParam) == 4 ||
+        parseInt(limitParam) >= 8 ||
+        parseInt(limitParam) >= 16)
+    ) {
+      setLimit(parseInt(limitParam));
+      setOffset(parseInt(offsetParam));
+      fetchPokemons({
+        limit: limitParam,
+        offset: offsetParam
+      });
+    } else {
+      fetchPokemons({
+        limit: limit,
+        offset: offset
+      });
+    }
   }, [limit, offset]);
 
   useEffect(() => {
@@ -47,11 +65,13 @@ const Home = (props: Props) => {
 
   const nextPage = () => {
     let currOffset = offset + limit;
+    setQueryParams({ limit: limit.toString(), offset: currOffset.toString() });
     setOffset(currOffset);
   };
 
   const prevPage = () => {
     let currOffset = offset - limit;
+    setQueryParams({ limit: limit.toString(), offset: currOffset.toString() });
     setOffset(currOffset);
   };
 
@@ -78,6 +98,10 @@ const Home = (props: Props) => {
                       aria-label="Floating label select example"
                       onChange={(event) => {
                         setLimit(parseInt(event.target.value));
+                        setQueryParams({
+                          limit: event.target.value,
+                          offset: offset.toString()
+                        });
                       }}
                       defaultValue={limit}
                     >

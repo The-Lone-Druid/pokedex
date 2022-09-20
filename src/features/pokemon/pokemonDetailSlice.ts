@@ -68,7 +68,24 @@ export const pokemonDetailsSlice = createSlice({
       state.weight = action.payload.weight;
     },
     resetPokemonDetailsState: (state) => {
-      state = initialState;
+      state.abilities = null;
+      state.base_experience = null;
+      state.forms = null;
+      state.game_indices = null;
+      state.height = null;
+      state.held_items = null;
+      state.id = null;
+      state.is_default = null;
+      state.location_area_encounters = null;
+      state.moves = null;
+      state.name = null;
+      state.order = null;
+      state.past_types = null;
+      state.species = null;
+      state.sprites = null;
+      state.stats = null;
+      state.types = null;
+      state.weight = null;
     }
   }
 });
