@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@capacitor/android": "^4.2.0",
+    "@capacitor/app": "^4.0.1",
+    "@capacitor/core": "^4.2.0",
+    "@capacitor/ios": "^4.2.0",
     "@popperjs/core": "^2.11.6",
     "@reduxjs/toolkit": "^1.8.5",
     "@testing-library/jest-dom": "^5.16.5",
@@ -53,6 +57,7 @@
     ]
   },
   "devDependencies": {
+    "@capacitor/cli": "^4.2.0",
     "@types/react-toastify": "^4.1.0"
   }
 }

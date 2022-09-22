@@ -84,7 +84,7 @@ const Signup = (props: Props) => {
   return (
     <div className="text-white py-5 d-flex align-items-center justify-content-center">
       {isLoading && <Loader />}
-      <div className="overflow-y-auto col-md-6">
+      <div className="overflow-y-auto col-md-6 p-3">
         <div className="bg-white shadow p-md-3 p-1 rounded d-flex align-items-center flex-md-row flex-column">
           <form
             className="p-3 text-dragon pt-3 pt-0 w-100 px-md-5"

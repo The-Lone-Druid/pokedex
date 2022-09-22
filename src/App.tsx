@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import AuthLayout from "./auth/AuthLayout";
 import AppLayout from "./screens/AppLayout";

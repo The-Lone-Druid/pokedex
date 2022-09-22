@@ -81,7 +81,7 @@ const Login = (props: Props) => {
   return (
     <div className="text-white vh-100 d-flex align-items-center justify-content-center">
       {isLoading && <Loader />}
-      <div className="overflow-y-auto col-md-6">
+      <div className="overflow-y-auto col-md-6 p-3">
         <div className="bg-white shadow p-md-3 p-1 rounded d-flex align-items-center flex-md-row flex-column">
           <form
             className="p-3 text-dragon w-100 px-md-5"
