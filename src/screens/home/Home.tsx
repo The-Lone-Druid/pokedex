@@ -15,37 +15,20 @@ type Props = {};
 const Home = (props: Props) => {
   const cachedPokemons = useAppSelector(selectPokemons);
   const dispatch = useAppDispatch();
-  const [queryParams, setQueryParams] = useSearchParams();
   const navigate = useNavigate();
   const [fetchPokemons, fetchPokemonsResponse] = useGetPokemonsMutation();
   const [pokemons, setPokemons] = useState([]);
   const [isLoading, setisLoading] = useState(false);
   const [limit, setLimit] = useState(8);
   const [offset, setOffset] = useState(0);
-  const limitParam = queryParams.get("limit" || "");
-  const offsetParam = queryParams.get("offset" || "");
+  const [lastElement, setLastElement]: any = useState("");
 
   useEffect(() => {
     setisLoading(true);
-    if (
-      limitParam &&
-      offsetParam &&
-      (parseInt(limitParam) == 4 ||
-        parseInt(limitParam) >= 8 ||
-        parseInt(limitParam) >= 16)
-    ) {
-      setLimit(parseInt(limitParam));
-      setOffset(parseInt(offsetParam));
-      fetchPokemons({
-        limit: limitParam,
-        offset: offsetParam
-      });
-    } else {
-      fetchPokemons({
-        limit: limit,
-        offset: offset
-      });
-    }
+    fetchPokemons({
+      limit: limit,
+      offset: offset
+    });
   }, [limit, offset]);
 
   useEffect(() => {
@@ -63,18 +46,6 @@ const Home = (props: Props) => {
     }
   }, [cachedPokemons]);
 
-  const nextPage = () => {
-    let currOffset = offset + limit;
-    setQueryParams({ limit: limit.toString(), offset: currOffset.toString() });
-    setOffset(currOffset);
-  };
-
-  const prevPage = () => {
-    let currOffset = offset - limit;
-    setQueryParams({ limit: limit.toString(), offset: currOffset.toString() });
-    setOffset(currOffset);
-  };
-
   const pokemonDetails = (pokemon: any) => {
     navigate(`/pokemon-details/${pokemon?.name}`);
   };
@@ -89,46 +60,6 @@ const Home = (props: Props) => {
             <div className="div mb-4">
               <div className="d-flex align-items-md-center justify-content-between flex-md-row flex-column">
                 <h1 className="fw-bold">List of Pokemons...</h1>
-                <div className="d-flex align-items-center justify-content-end">
-                  <div className="me-2">
-                    <select
-                      className="form-select"
-                      id="limit"
-                      name="limit"
-                      aria-label="Floating label select example"
-                      onChange={(event) => {
-                        setLimit(parseInt(event.target.value));
-                        setQueryParams({
-                          limit: event.target.value,
-                          offset: offset.toString()
-                        });
-                      }}
-                      defaultValue={limit}
-                    >
-                      <option value={4}>Limit: 4</option>
-                      <option value={8}>Limit: 8</option>
-                      <option value={16}>Limit: 16</option>
-                    </select>
-                  </div>
-                  <div>
-                    <button
-                      className="btn btn-primary me-2"
-                      disabled={offset === 0}
-                      onClick={prevPage}
-                    >
-                      <i className="bi bi-chevron-left me-1"></i>
-                      Prev
-                    </button>
-                    <button
-                      className="btn btn-primary"
-                      onClick={nextPage}
-                      disabled={false}
-                    >
-                      Next
-                      <i className="bi bi-chevron-right ms-1"></i>
-                    </button>
-                  </div>
-                </div>
               </div>
             </div>
             <div className="row">
@@ -145,6 +76,7 @@ const Home = (props: Props) => {
                       }}
                       className="col-xl-3 col-lg-4 col-sm-6 pb-md-5 pb-4"
                       key={index}
+                      id={name}
                       onClick={() => {
                         pokemonDetails(pokemon);
                       }}
@@ -152,7 +84,9 @@ const Home = (props: Props) => {
                       <div className="card pokeball-card rounded-3 bg-electric border-0 overflow-hidden p-1 cursor-pointer shadow">
                         <div className="bg-white p-3 rounded-3 d-flex align-items-center justify-content-center">
                           <img
-                            src={PokeBall}
+                            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
+                              index + 1
+                            }.png`}
                             height={150}
                             width={150}
                             alt=""
@@ -166,6 +100,16 @@ const Home = (props: Props) => {
                     </motion.div>
                   );
                 })}
+            </div>
+            <div className="py-4 d-flex align-items-center justify-content-center">
+              <button
+                className="btn py-3 px-5 rounded-pill btn-dark"
+                onClick={() => {
+                  setLimit(limit + 8);
+                }}
+              >
+                Load more ...
+              </button>
             </div>
           </div>
         )}
